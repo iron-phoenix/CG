@@ -1,3 +1,5 @@
+#version 150
+
 out vec4 color;
 in vec2 pos;
 

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>brickwork-texture.jpg</file>
+        <file>cylinder.obj</file>
+        <file>fragment.frag</file>
+        <file>quad.obj</file>
+        <file>sphere.obj</file>
+        <file>vertex.vert</file>
+    </qresource>
+</RCC>
