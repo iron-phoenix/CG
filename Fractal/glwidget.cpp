@@ -56,13 +56,16 @@ void GLWidget::mousePressEvent(QMouseEvent* event) {
 
 void GLWidget::mouseMoveEvent(QMouseEvent* event) {
     if(!(event->buttons() & Qt::LeftButton)) return;
-    xoffset -= (event->x() - oldMousePos.x()) / 150.0;
-    yoffset -= (event->y() - oldMousePos.y()) / 150.0;
+    xoffset -= 2.0 * (event->x() - oldMousePos.x()) / float(width());
+    yoffset -= 2.0 * (event->y() - oldMousePos.y()) / float(height());
     oldMousePos = event->pos();
     updateGL();
 }
 
 void GLWidget::wheelEvent(QWheelEvent* event) {
-    fscale = qMax(0.1, qMin(100.0, fscale + 0.0005 * (float)event->delta()));
+    float sf = event->delta() > 0 ? 1.1 : 0.9;
+    fscale *= sf;
+    xoffset = (sf - 1.0) * ((event->x() - float(width()) / 2.0) / float(width()) * 2.0) + sf * xoffset;
+    yoffset = (sf - 1.0) * ((event->y() - float(height()) / 2.0) / float(height()) * 2.0) + sf * yoffset;
     updateGL();
 }
