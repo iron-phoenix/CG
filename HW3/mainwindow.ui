@@ -57,6 +57,9 @@
       </item>
       <item>
        <widget class="QCheckBox" name="filteringBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Filtering</string>
         </property>
@@ -84,6 +87,34 @@
       </item>
      </layout>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QRadioButton" name="radioButton">
+        <property name="text">
+         <string>No filter</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_3">
+        <property name="text">
+         <string>Bilinear filter</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2">
+        <property name="text">
+         <string>Bicubic filter</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
  </widget>
@@ -98,6 +129,9 @@
     <slot>changeModel(int)</slot>
     <slot>setMultiplier(double)</slot>
     <slot>setFiltering(bool)</slot>
+    <slot>noFiltering()</slot>
+    <slot>bilinearFiltering()</slot>
+    <slot>bicubicFiltering()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -110,8 +144,8 @@
    <slot>changeModel(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>210</x>
-     <y>589</y>
+     <x>220</x>
+     <y>564</y>
     </hint>
     <hint type="destinationlabel">
      <x>192</x>
@@ -126,8 +160,8 @@
    <slot>setMultiplier(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>568</x>
-     <y>577</y>
+     <x>589</x>
+     <y>564</y>
     </hint>
     <hint type="destinationlabel">
      <x>512</x>
@@ -142,12 +176,60 @@
    <slot>setFiltering(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>468</x>
-     <y>580</y>
+     <x>482</x>
+     <y>562</y>
     </hint>
     <hint type="destinationlabel">
      <x>453</x>
      <y>485</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>widget</receiver>
+   <slot>noFiltering()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>19</x>
+     <y>581</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>405</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>widget</receiver>
+   <slot>bilinearFiltering()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>583</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>436</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>widget</receiver>
+   <slot>bicubicFiltering()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>410</x>
+     <y>579</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>421</x>
+     <y>437</y>
     </hint>
    </hints>
   </connection>

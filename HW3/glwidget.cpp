@@ -7,6 +7,8 @@
 GLWidget::GLWidget(QWidget *parent) :
     QGLWidget(parent),
     shader(new QGLShaderProgram()),
+    simpleShader(new QGLShaderProgram()),
+    bicubicShader(new QGLShaderProgram()),
     distance(30.0),
     hAngle(0),
     vAngle(0),
@@ -26,15 +28,26 @@ void GLWidget::initializeGL()
     glDisable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
 
-    loadShader(shader, ":/vertex.vert", QGLShader::Vertex);
-    loadShader(shader, ":/fragment.frag", QGLShader::Fragment);
-    shader->bindAttributeLocation("vertex", 0);
-    shader->bindAttributeLocation("texcoord", 1);
-    shader->link();
-    shader->bind();
-    shader->setUniformValue("texture", 0);
+    loadShader(simpleShader, ":/vertex.vert", QGLShader::Vertex);
+    loadShader(simpleShader, ":/fragment.frag", QGLShader::Fragment);
+    simpleShader->bindAttributeLocation("vertex", 0);
+    simpleShader->bindAttributeLocation("texcoord", 1);
+    simpleShader->link();
+    simpleShader->bind();
+    simpleShader->setUniformValue("texture", 0);
+
+    loadShader(bicubicShader, ":/vertex.vert", QGLShader::Vertex);
+    loadShader(bicubicShader, ":/bicubic.frag", QGLShader::Fragment);
+    bicubicShader->bindAttributeLocation("vertex", 0);
+    bicubicShader->bindAttributeLocation("texcoord", 1);
+    bicubicShader->link();
+    bicubicShader->bind();
+    bicubicShader->setUniformValue("texture", 0);
 
     texture = bindTexture(QPixmap(QString(":/brickwork-texture.jpg")), GL_TEXTURE_2D);
+
+    shader = simpleShader;
+    shader->bind();
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -128,5 +141,29 @@ void GLWidget::setFiltering(bool is_set)
 void GLWidget::setMultiplier(double multiplier)
 {
     this->multiplier = multiplier;
+    updateGL();
+}
+
+void GLWidget::noFiltering() {
+    shader = simpleShader;
+    shader->bind();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    updateGL();
+}
+
+void GLWidget::bilinearFiltering() {
+    shader = simpleShader;
+    shader->bind();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    updateGL();
+}
+
+void GLWidget::bicubicFiltering() {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    shader = bicubicShader;
+    shader->bind();
     updateGL();
 }

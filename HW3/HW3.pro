@@ -27,7 +27,10 @@ RESOURCES += \
 OTHER_FILES += \
     v2.vert \
     v1.vert \
-    f2.frag
+    f2.frag \
+    vertex.vert \
+    fragment.frag \
+    bicubic.frag
 
 DISTFILES += \
     fragment.frag \

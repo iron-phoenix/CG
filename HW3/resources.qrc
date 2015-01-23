@@ -6,5 +6,6 @@
         <file>quad.obj</file>
         <file>sphere.obj</file>
         <file>vertex.vert</file>
+        <file>bicubic.frag</file>
     </qresource>
 </RCC>

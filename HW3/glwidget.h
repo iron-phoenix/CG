@@ -32,6 +32,10 @@ protected slots:
     void setFiltering(bool is_set);
     void setMultiplier(double multiplier);
 
+    void noFiltering();
+    void bilinearFiltering();
+    void bicubicFiltering();
+
 private:
     struct Face {
         int vtx[3];
@@ -99,6 +103,8 @@ private:
     }
 
     QGLShaderProgram* shader;
+    QGLShaderProgram* simpleShader;
+    QGLShaderProgram* bicubicShader;
 
     QMatrix4x4 model;
     QMatrix4x4 view;
