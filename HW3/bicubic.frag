@@ -31,5 +31,5 @@ vec4 BiCubic(sampler2D texture_sampler, vec2 tex_coord) {
 }
 
 void main(void) {
-    gl_FragColor = BiCubic(texture_sampler, v_texcoord);
+    gl_FragColor = BiCubic(texture_sampler, v_texcoord - vec2(1.0 / 1024, 1.0 / 1024));
 }
